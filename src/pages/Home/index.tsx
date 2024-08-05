@@ -1,9 +1,11 @@
 import Banner from "../../components/Banner";
+import Menu from "../../components/menu";
 
 export default function Home() {
     return (
-        <div className="bg-slate-100">
+        <>
             <Banner />
-        </div>
+            <Menu />
+        </>
     )
 }

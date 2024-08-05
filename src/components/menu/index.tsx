@@ -12,6 +12,7 @@ import Bebida1 from '../../assets/refri-1.png'
 import Bebida2 from '../../assets/refri-2.png'
 import Card from "../cards"
 import Heading from "../heading"
+import Modal from "../Modal"
 
 export interface Items {
     id: number
@@ -106,23 +107,26 @@ const bebidasValue: Items[] = [
 export default function Menu() {
     const [hamburguers, setHamburguers] = useState<Items[]>(hamburguersValue)
     const [bebidas, setBebidas] = useState<Items[]>(bebidasValue)
+    const [open, setOpen] = useState<boolean>(false)
     return (
         <main>
-            <Heading text="Conheça nosso cardapio" side="text-center"/>
+            <Heading text="Conheça nosso cardapio" side="text-center" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 gap-8 md:gap-12 mx-auto max-w-7xl mb-10">
                 {hamburguers.map(hamburguer => (
-                    <Card item={hamburguer}/>
+                    <Card item={hamburguer} handlerModal={() => setOpen(!open)} />
                 ))}
             </div>
 
-        
-            <Heading text="Bebidas" side="text-start" px="px-4"/>
+
+            <Heading text="Bebidas" side="text-start" px="px-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 gap-8 md:gap-12 mx-auto max-w-7xl mb-10">
                 {bebidas.map(bebida => (
-                    <Card item={bebida}/>
+                    <Card item={bebida} handlerModal={() => setOpen(!open)} />
                 ))}
             </div>
+
+            <Modal open={open} setOpen={setOpen}/>
 
 
         </main>

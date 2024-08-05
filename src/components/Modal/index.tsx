@@ -26,7 +26,7 @@ export default function Modal({ open, setOpen }: Props) {
                             <p>(Quantidade: {cart.quantities})</p>
                             <p onClick={() => removeItemFromCart(cart.name)}>Remover</p>
                         </div>
-                        <p>R$ {cart.price}</p>
+                        <p>R$ {Number(cart.price) * cart.quantities}</p>
                     </div>
                 ))}
                 <div className="flex flex-row gap-4 w-full justify-between items-center">

@@ -1,10 +1,15 @@
+import { useContext, useEffect } from "react";
 import Heading from "../heading";
+import { CartProvider } from "../../context/carrinho";
 
 interface Props {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-export default function Modal({open, setOpen}: Props) {
+export default function Modal({ open, setOpen }: Props) {
+
+    const { cart, removeItemFromCart } = useContext(CartProvider)
+
     return (
         <dialog className="modal bg-gray-900/70" open={open}>
             <div className="modal-box bg-slate-50 shadow-lg border-gray-500">
@@ -14,25 +19,19 @@ export default function Modal({open, setOpen}: Props) {
                     </button>
                 </div>
                 <Heading text="Meu Carrinho" side="text-center" />
-                <div className="my-4">
-                    <p className="font-bold">Cheese Burguer</p>
-                    <div className="flex flex-row justify-between items-center my-2">
-                        <p>(Quantidade: 3)</p>
-                        <p>Remover</p>
+                {cart.map(cart => (
+                    <div className="my-4">
+                        <p className="font-bold">{cart.name}</p>
+                        <div className="flex flex-row justify-between items-center my-2">
+                            <p>(Quantidade: {cart.quantities})</p>
+                            <p onClick={() => removeItemFromCart(cart.name)}>Remover</p>
+                        </div>
+                        <p>R$ {cart.price}</p>
                     </div>
-                    <p>R$ 30.00</p>
-                </div>
-                <div className="my-4">
-                    <p className="font-bold">Cheese Burguer</p>
-                    <div className="flex flex-row justify-between items-center my-2">
-                        <p>(Quantidade: 3)</p>
-                        <p>Remover</p>
-                    </div>
-                    <p>R$ 30.00</p>
-                </div>
+                ))}
                 <div className="flex flex-row gap-4 w-full justify-between items-center">
                     <p className="font-bold text-xl">Total:</p>
-                    <span className="text-green-500 text-xl font-semibold">R$30.00</span>
+                    <span className="text-green-500 text-xl font-semibold">R${cart.reduce((sum, item) => sum + (Number(item.price) * item.quantities), 0).toFixed(2)}</span>
                 </div>
                 <div className="w-full mt-8 flex flex-col gap-4">
                     <p className="font-medium">Endereço De Entrega: </p>

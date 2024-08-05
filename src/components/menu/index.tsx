@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {useContext, useState } from "react"
 import Burguer1 from '../../assets/hamb-1.png'
 import Burguer2 from '../../assets/hamb-2.png'
 import Burguer3 from '../../assets/hamb-3.png'
@@ -13,6 +13,7 @@ import Bebida2 from '../../assets/refri-2.png'
 import Card from "../cards"
 import Heading from "../heading"
 import Modal from "../Modal"
+import { CartProvider } from "../../context/carrinho"
 
 export interface Items {
     id: number
@@ -108,13 +109,17 @@ export default function Menu() {
     const [hamburguers, setHamburguers] = useState<Items[]>(hamburguersValue)
     const [bebidas, setBebidas] = useState<Items[]>(bebidasValue)
     const [open, setOpen] = useState<boolean>(false)
+
+    const {addItemToCart} = useContext(CartProvider)
+
+
     return (
         <main>
             <Heading text="Conheça nosso cardapio" side="text-center" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 gap-8 md:gap-12 mx-auto max-w-7xl mb-10">
                 {hamburguers.map(hamburguer => (
-                    <Card item={hamburguer} handlerModal={() => setOpen(!open)} />
+                    <Card item={hamburguer} handlerModal={() => { addItemToCart({name: hamburguer.name, price: hamburguer.price, quantities: 1}); setOpen(!open)}} />
                 ))}
             </div>
 
@@ -122,7 +127,7 @@ export default function Menu() {
             <Heading text="Bebidas" side="text-start" px="px-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 gap-8 md:gap-12 mx-auto max-w-7xl mb-10">
                 {bebidas.map(bebida => (
-                    <Card item={bebida} handlerModal={() => setOpen(!open)} />
+                    <Card item={bebida} handlerModal={() => {addItemToCart({name: bebida.name, price: bebida.price, quantities: 1}); setOpen(!open)}} />
                 ))}
             </div>
 

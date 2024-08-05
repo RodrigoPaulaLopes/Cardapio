@@ -1,10 +1,13 @@
 import { Items } from "../menu"
 
+
 interface IProps {
     item: Items
     handlerModal: () => void
 }
 export default function Card({item, handlerModal}: IProps) {
+
+   
     return (
         <div className="flex gap-2">
             <img src={item.image} alt="burguer-1" className="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-300" />
